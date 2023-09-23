@@ -7,3 +7,11 @@
 1695012251 e:\users\documents\tp_sintaxis\adf\string_utils.h
 	<stdlib.h>
 
+1695339995 source:e:\users\documents\ssl adf\adf\tp_sintaxis\adf\main.c
+	<stdio.h>
+	<stdlib.h>
+	"string_utils.h"
+
+1695339963 e:\users\documents\ssl adf\adf\tp_sintaxis\adf\string_utils.h
+	<stdlib.h>
+
