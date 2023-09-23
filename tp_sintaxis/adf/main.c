@@ -5,28 +5,29 @@
 
 int main()
 {
-    char cadena[50]= "-01230$-01231$1A$012347$0xFFFF";
-    //printf("respuesta %d",stringToInt("52322"));
+    char cadena[100]= "-01230$-01231$1A$012347$0xFFFF";
+    //printf("respuesta %d",str_to_int("52322"));
 
     char * token = strtok(cadena, "$");
     int contador_numeros_decimales=0;
     int contador_numeros_octales=0;
     int contador_numeros_hexadecimales =0;
+
     while( token != NULL )
     {
         int respuesta_evaluar_decimal = evaluar_decimal(token);
         int respuesta_evaluar_octal = evaluar_octal(token);
         int respuesta_evaluar_hexadecimal = evaluar_hexadecimal(token);
 
-        if(respuesta_evaluar_decimal==1)
+        if(respuesta_evaluar_decimal)
         {
             contador_numeros_decimales++;
         }
-        if(respuesta_evaluar_octal==1)
+        if(respuesta_evaluar_octal)
         {
             contador_numeros_octales++;
         }
-        if(respuesta_evaluar_hexadecimal==1)
+        if(respuesta_evaluar_hexadecimal)
         {
             contador_numeros_hexadecimales++;
         }
