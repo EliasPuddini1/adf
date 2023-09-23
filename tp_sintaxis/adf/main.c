@@ -5,21 +5,28 @@
 
 int main()
 {
-    char string[20]= "-01230$-01231";
+    char string[20]= "-01230$-01231$1A";
     //printf("respuesta %d",stringToInt("52322"));
 
     char * token = strtok(string, "$");
 
     while( token != NULL )
     {
-        printf("verifica alfabeto decimal %s? %d\n",token,verifica_decimal(token));
+        int verifica_decimal2 = verifica_decimal(token);
+        printf("verifica alfabeto decimal %s? %d\n",token,verifica_decimal2);
 
-        printf("es palabra decimal %s? %d\n",token,es_palabra_decimal(token));
+        if(verifica_decimal2==1)
+        {
+            printf("es palabra decimal %s? %d\n",token,es_palabra_decimal(token));
 
+        }
+        else
+        {
+            printf("No se evalua la palabra %s porque no verifica alfabeto\n", token);
+        }
         token = strtok(NULL, "$");
+
     }
-
-
     return 0;
 }
 
