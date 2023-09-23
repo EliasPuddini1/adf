@@ -20,10 +20,10 @@ int main()
 
 int evaluar_decimal(char *cadena)
 {
-    int respuesta_verifica_decimal = verifica_decimal(cadena);
-    printf("verifica alfabeto decimal %s? %d\n",cadena,respuesta_verifica_decimal);
+    int respuesta_verifica_alfabeto_decimal = verifica_alfabeto_decimal(cadena);
+    printf("verifica alfabeto decimal %s? %d\n",cadena,respuesta_verifica_alfabeto_decimal);
 
-    if(respuesta_verifica_decimal==1)
+    if(respuesta_verifica_alfabeto_decimal==1)
     {
         printf("es palabra decimal %s? %d\n",cadena,es_palabra_decimal(cadena));
 
@@ -34,7 +34,7 @@ int evaluar_decimal(char *cadena)
     }
 }
 
-int verifica_decimal(char *s)
+int verifica_alfabeto_decimal(char *s)
 {
     unsigned int i;
 
