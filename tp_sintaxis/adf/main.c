@@ -5,29 +5,33 @@
 
 int main()
 {
-    char string[20]= "-01230$-01231$1A";
+    char cadena[20]= "-01230$-01231$1A";
     //printf("respuesta %d",stringToInt("52322"));
 
-    char * token = strtok(string, "$");
+    char * token = strtok(cadena, "$");
 
     while( token != NULL )
     {
-        int verifica_decimal2 = verifica_decimal(token);
-        printf("verifica alfabeto decimal %s? %d\n",token,verifica_decimal2);
-
-        if(verifica_decimal2==1)
-        {
-            printf("es palabra decimal %s? %d\n",token,es_palabra_decimal(token));
-
-        }
-        else
-        {
-            printf("No se evalua la palabra %s porque no verifica alfabeto\n", token);
-        }
+        int respuesta_evaluar_decimal = evaluar_decimal(token);
         token = strtok(NULL, "$");
-
     }
     return 0;
+}
+
+int evaluar_decimal(char *cadena)
+{
+    int respuesta_verifica_decimal = verifica_decimal(cadena);
+    printf("verifica alfabeto decimal %s? %d\n",cadena,respuesta_verifica_decimal);
+
+    if(respuesta_verifica_decimal==1)
+    {
+        printf("es palabra decimal %s? %d\n",cadena,es_palabra_decimal(cadena));
+
+    }
+    else
+    {
+        printf("No se evalua la palabra %s porque no verifica alfabeto\n", cadena);
+    }
 }
 
 int verifica_decimal(char *s)
@@ -64,7 +68,7 @@ int es_palabra_decimal(char *cadena)
     int c= cadena[i];
     while(c!='\0')
     {
-        estado=tt[estado][columna(c)];
+        estado=tt[estado][columna_decimal(c)];
         c = cadena[++i];
     }
 
@@ -75,7 +79,7 @@ int es_palabra_decimal(char *cadena)
     return 0;
 }
 
-int columna(int c)
+int columna_decimal(int c)
 {
     switch(c)
     {
