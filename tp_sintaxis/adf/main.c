@@ -31,13 +31,16 @@ int verifica_decimal(char *s)
 
 int es_palabra_decimal(char *cadena)
 {
+    const int FINAL_STATE = 2;
+    const int INVALID_STATE = 3;
+
 
     const int tt[4][3]=
     {
-        {2,1,1},
-        {2,3,3},
-        {2,3,3},
-        {3,3,3}
+        {FINAL_STATE,1,1},
+        {FINAL_STATE,INVALID_STATE,INVALID_STATE},
+        {FINAL_STATE,INVALID_STATE,INVALID_STATE},
+        {INVALID_STATE,INVALID_STATE,INVALID_STATE}
     };
 
     int estado = 0;
@@ -49,7 +52,7 @@ int es_palabra_decimal(char *cadena)
         c = cadena[++i];
     }
 
-    if(estado == 2)
+    if(estado == FINAL_STATE)
     {
         return 1;
     }
