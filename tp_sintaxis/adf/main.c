@@ -9,17 +9,35 @@ int main()
     //printf("respuesta %d",stringToInt("52322"));
 
     char * token = strtok(cadena, "$");
+    int contador_numeros_decimales=0;
+    int contador_numeros_octales=0;
+    int contador_numeros_hexadecimales =0;
     while( token != NULL )
     {
-      //  int respuesta_evaluar_decimal = evaluar_decimal(token);
-        //int respuesta_evaluar_octal = evaluar_octal(token);
+        int respuesta_evaluar_decimal = evaluar_decimal(token);
+        int respuesta_evaluar_octal = evaluar_octal(token);
         int respuesta_evaluar_hexadecimal = evaluar_hexadecimal(token);
+
+        if(respuesta_evaluar_decimal==1)
+        {
+            contador_numeros_decimales++;
+        }
+        if(respuesta_evaluar_octal==1)
+        {
+            contador_numeros_octales++;
+        }
+        if(respuesta_evaluar_hexadecimal==1)
+        {
+            contador_numeros_hexadecimales++;
+        }
 
         token = strtok(NULL, "$");
 
         printf("*************************************\n");
-
     }
+    printf("palabras DECIMALES : %d , OCTALES: %d , HEXADECIMALES: %d", contador_numeros_decimales, contador_numeros_octales, contador_numeros_hexadecimales);
+
+
     return 0;
 }
 
@@ -27,16 +45,19 @@ int evaluar_decimal(char *cadena)
 {
     int respuesta_verifica_alfabeto_decimal = verifica_alfabeto_decimal(cadena);
     printf("verifica alfabeto decimal %s? %d\n",cadena,respuesta_verifica_alfabeto_decimal);
+    int respuesta_es_palabra_decimal = 0;
 
     if(respuesta_verifica_alfabeto_decimal==1)
     {
-        printf("es palabra decimal %s? %d\n",cadena,es_palabra_decimal(cadena));
+        respuesta_es_palabra_decimal =es_palabra_decimal(cadena);
+        printf("es palabra decimal %s? %d\n",cadena,respuesta_es_palabra_decimal);
 
     }
     else
     {
         printf("No se evalua la palabra %s porque no verifica alfabeto decimal\n", cadena);
     }
+    return respuesta_es_palabra_decimal;
 }
 
 int verifica_alfabeto_decimal(char *s)
@@ -101,16 +122,20 @@ int evaluar_octal(char *cadena)
 {
     int respuesta_verifica_alfabeto_octal = verifica_alfabeto_octal(cadena);
     printf("verifica alfabeto octal %s? %d\n",cadena,respuesta_verifica_alfabeto_octal);
+    int respuesta_es_palabra_octal= 0;
+
 
     if(respuesta_verifica_alfabeto_octal==1)
     {
-        printf("es palabra octal %s? %d\n",cadena,es_palabra_octal(cadena));
+        respuesta_es_palabra_octal = es_palabra_octal(cadena);
+        printf("es palabra octal %s? %d\n",cadena,respuesta_es_palabra_octal);
 
     }
     else
     {
         printf("No se evalua la palabra %s porque no verifica alfabeto octal\n", cadena);
     }
+    return respuesta_es_palabra_octal;
 }
 
 int verifica_alfabeto_octal(char *s)
@@ -193,16 +218,19 @@ int evaluar_hexadecimal(char *cadena)
 {
     int respuesta_verifica_alfabeto_hexadecimal = verifica_alfabeto_hexadecimal(cadena);
     printf("verifica alfabeto hexadecimal %s? %d\n",cadena,respuesta_verifica_alfabeto_hexadecimal);
+    int respuesta_es_palabra_hexadecimal= 0;
 
     if(respuesta_verifica_alfabeto_hexadecimal==1)
     {
-        printf("es palabra hexadecimal %s? %d\n",cadena,es_palabra_hexadecimal(cadena));
+        respuesta_es_palabra_hexadecimal = es_palabra_hexadecimal(cadena);
+        printf("es palabra hexadecimal %s? %d\n",cadena,respuesta_es_palabra_hexadecimal);
 
     }
     else
     {
         printf("No se evalua la palabra %s porque no verifica alfabeto hexadecimal\n", cadena);
     }
+    return respuesta_es_palabra_hexadecimal;
 }
 
 int verifica_alfabeto_hexadecimal(char *s)
