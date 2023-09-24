@@ -1,10 +1,3 @@
-#include <stdlib.h>
-
-/*int str_to_int(char* cadena)
-{
-    return (int)strtol(cadena,NULL, 10);
-}*/
-
 int str_to_int(const char *str) {
     int result = 0;
     int signo = 1;
@@ -21,3 +14,6 @@ int str_to_int(const char *str) {
 
     return signo * result;
 }
+
+int isOperator(char *c){
+return 0;}
