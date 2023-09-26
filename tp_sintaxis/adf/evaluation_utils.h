@@ -1,9 +1,43 @@
+/*void procesar_palabra(char *cadena){
+    char * token = strtok(cadena, "$");
+     while( token != NULL )
+    { //evaluar_palabra (int respuesta)
+        if(evaluar_decimal(token))
+        {
+            contador_numeros_decimales++;
+        }
+        else if(evaluar_octal(token))
+        {
+            contador_numeros_octales++;
+        }
+        else if(evaluar_hexadecimal(token))
+        {
+            contador_numeros_hexadecimales++;
+        }
+
+        token = strtok(NULL, "$");
+
+        printf("*************************************\n");
+    }
+    printf("palabras DECIMALES : %d , OCTALES: %d , HEXADECIMALES: %d", contador_numeros_decimales, contador_numeros_octales, contador_numeros_hexadecimales);
+}
+
 int evaluar_palabra(char *cadena)
-{
+{   
+    //if (el primero == tiene + - )
+    //verifico decimal
+    //asigna 1
+    //ELSE (primero == 0 )
+    //asiga 2
+    //verifica alfabeto octal
+    //else (primeros 2 == 0x)
+    //verifica alfabeto hexa
+    //asigna 3 
+
    return 0; 
 }
 
-
+*/
 int evaluar_decimal(char *cadena)
 {
     int respuesta_verifica_alfabeto_decimal = verifica_alfabeto_decimal(cadena);
