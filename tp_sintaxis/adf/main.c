@@ -21,19 +21,15 @@ int main()
     //evaluar cadenas
     while( token != NULL )
     {
-        int respuesta_evaluar_decimal = evaluar_decimal(token);
-        int respuesta_evaluar_octal = evaluar_octal(token);
-        int respuesta_evaluar_hexadecimal = evaluar_hexadecimal(token);
-
-        if(respuesta_evaluar_decimal)
+        if(evaluar_decimal(token))
         {
             contador_numeros_decimales++;
         }
-        if(respuesta_evaluar_octal)
+        else if(evaluar_octal(token))
         {
             contador_numeros_octales++;
         }
-        if(respuesta_evaluar_hexadecimal)
+        else if(evaluar_hexadecimal(token))
         {
             contador_numeros_hexadecimales++;
         }
