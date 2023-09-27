@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <ctype.h>
 /*void procesar_palabra(char *cadena){
     char * token = strtok(cadena, "$");
      while( token != NULL )
