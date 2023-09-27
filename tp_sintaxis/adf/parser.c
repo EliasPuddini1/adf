@@ -1,137 +1,71 @@
 #include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+#include <stdbool.h>
+#include <ctype.h>
 
-// Longitud de las expresiones en caracteres
-#define LEN 80
+// Enumeración para los estados del autómata
+typedef enum {
+    INICIAL,
+    ENTERO_DECIMAL,
+    ENTERO_OCTAL,
+    ENTERO_HEXADECIMAL,
+    ERROR
+} Estado;
 
-// Tamaño de la pila
-#define MAX 40
+int evaluarExpresionRPN(const char *expresionRPN) {
+    int stack[100]; // Pila para almacenar operandos
+    int top = -1;   // Índice del elemento superior de la pila
 
-// Definición de la estructura Stack
-typedef struct {
-    char st[MAX];
-    int top;
-} Stack;
+    for (int i = 0; expresionRPN[i] != '\0'; i++) {
+        char caracter = expresionRPN[i];
 
-// Función para inicializar la pila
-void initialize(Stack *s) {
-    s->top = 0;
-}
-
-// Función para insertar un carácter en la pila
-void push(Stack *s, char var) {
-    s->st[++(s->top)] = var;
-}
-
-// Función para obtener un carácter de la pila
-char pop(Stack *s) {
-    return s->st[(s->top)--];
-}
-
-// Función para obtener el valor en la parte superior de la pila
-int gettop(Stack *s) {
-    return s->top;
-}
-
-// Definición de la estructura Express
-typedef struct {
-    Stack s;
-    char *pStr;
-    int len;
-} Express;
-
-// Función para inicializar una expresión
-void initializeExpress(Express *e, char *ptr) {
-    e->pStr = ptr;
-    e->len = strlen(e->pStr);
-    initialize(&(e->s));
-}
-
-// Función para analizar la expresión
-void parse(Express *e) {
-    char ch;
-    char lastval;
-    char lastop;
-
-    for (int j = 0; j < e->len; j++) {
-        ch = e->pStr[j];
-
-        if (ch >= '0' && ch <= '9')
-            push(&(e->s), ch - '0');
-        else if (ch == '+' || ch == '-' || ch == '*' || ch == '/') {
-            if (gettop(&(e->s)) == 1)
-                push(&(e->s), ch);
-            else {
-                lastval = pop(&(e->s));
-                lastop = pop(&(e->s));
-                if ((ch == '*' || ch == '/') && (lastop == '+' || lastop == '-')) {
-                    push(&(e->s), lastop);
-                    push(&(e->s), lastval);
-                } else {
-                    switch (lastop) {
-                    case '+':
-                        push(&(e->s), pop(&(e->s)) + lastval);
-                        break;
-                    case '-':
-                        push(&(e->s), pop(&(e->s)) - lastval);
-                        break;
-                    case '*':
-                        push(&(e->s), pop(&(e->s)) * lastval);
-                        break;
-                    case '/':
-                        push(&(e->s), pop(&(e->s)) / lastval);
-                        break;
-                    default:
-                        printf("\nOperador desconocido");
-                        exit(1);
-                    }
-                }
-                push(&(e->s), ch);
+        if (isdigit(caracter) || (caracter == '-' && isdigit(expresionRPN[i + 1]))) {
+            // Leer un número
+            int numero = strtol(&expresionRPN[i], NULL, 10);
+            stack[++top] = numero;
+            // Mover el índice 'i' al final del número
+            while (isdigit(expresionRPN[i]) || expresionRPN[i] == '-') {
+                i++;
             }
-        } else {
-            printf("\nCarácter de entrada desconocido");
-            exit(1);
+            i--;
+        } else if (caracter == '+') {
+            int operand2 = stack[top--];
+            int operand1 = stack[top--];
+            stack[++top] = operand1 + operand2;
+        } else if (caracter == '-') {
+            int operand2 = stack[top--];
+            int operand1 = stack[top--];
+            stack[++top] = operand1 - operand2;
+        } else if (caracter == '*') {
+            int operand2 = stack[top--];
+            int operand1 = stack[top--];
+            stack[++top] = operand1 * operand2;
+        } else if (caracter == '/') {
+            int operand2 = stack[top--];
+            int operand1 = stack[top--];
+            if (operand2 != 0) {
+                stack[++top] = operand1 / operand2;
+            } else {
+                printf("Error: División por cero.\n");
+                exit(1);
+            }
         }
     }
+
+    return stack[top];
 }
 
-// Función para resolver la expresión
-int solve(Express *e) {
-    char lastval;
-    while (gettop(&(e->s)) > 1) {
-        lastval = pop(&(e->s));
-        switch (pop(&(e->s))) {
-        case '+':
-            push(&(e->s), pop(&(e->s)) + lastval);
-            break;
-        case '-':
-            push(&(e->s), pop(&(e->s)) - lastval);
-            break;
-        case '*':
-            push(&(e->s), pop(&(e->s)) * lastval);
-            break;
-        case '/':
-            push(&(e->s), pop(&(e->s)) / lastval);
-            break;
-        default:
-            printf("\nOperador desconocido");
-            exit(1);
-        }
-    }
-    return (int)(pop(&(e->s)));
-}
 
-// Función principal
 int main() {
-    char string[LEN] = "2+3*4/3-2";
 
-    Express e;
-    initializeExpress(&e, string);
 
-    parse(&e);
+    char expresionRPN[100];
 
-    printf("%d\n", solve(&e));
+    printf("Ingrese una expresión aritmética en RPN: ");
+    fgets(expresionRPN, sizeof(expresionRPN), stdin);
+    expresionRPN[strlen(expresionRPN) - 1] = '\0'; // Eliminar el salto de línea al final
+
+    int resultado = evaluarExpresionRPN(expresionRPN);
+    printf("Resultado: %d\n", resultado);
 
     return 0;
 }
