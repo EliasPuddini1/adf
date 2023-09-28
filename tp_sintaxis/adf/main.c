@@ -6,9 +6,12 @@
 #include "string_utils.h"
 #include "evaluation_utils.h"
 #include "menu.h"
+#include "parser.h"
 
 int main() {
     char cadena[100] = "-01230$-01231$1A$012347$0xFFFF";
+    char string[LEN] = "2+3*4/3-2";
+    char stringA[LEN];
     char *token = strtok(cadena, "$");
     char cadena_Archivo[40];
     char path[128];
@@ -17,13 +20,31 @@ int main() {
     int contador_numeros_hexadecimales = 0;
     int opcion_Menu_Principal;
     int opcion_Menu_Secundario;
+    int opcion_Menu_Parseado;
+    Express e;
     
     do {
         mostrarMenuPrincipal(&opcion_Menu_Principal);
         
         switch (opcion_Menu_Principal) {
             case 1:
-                printf("Funcion no implementada aun. \n");
+                mostrarMenuParseado(&opcion_Menu_Parseado);
+
+                switch (opcion_Menu_Parseado) {
+                    case 1:
+                    printf("Ingrese un valor: ");
+                    scanf("%s",stringA);
+                    initializeExpress(&e, stringA);
+                    parse(&e);
+                    printf("El resultado es: %d\n", solve(&e));
+                    break;
+                    case 2:
+                    printf("Operacion de Ejemplo: %s\n",string);
+                    initializeExpress(&e, string);
+                    parse(&e);
+                    printf("El resultado es: %d\n", solve(&e));
+                    break;
+                }
                 break;
             case 2:
                 mostrarMenuSecundario(&opcion_Menu_Secundario);
@@ -58,6 +79,20 @@ int main() {
                         } else {
                             while (fgets(cadena_Archivo, sizeof(cadena_Archivo), automata) != NULL) {
                                 printf("La cadena es: %s\n", cadena_Archivo);
+                                char *tokenA = strtok(cadena_Archivo, "$");
+                                while (tokenA != NULL) {
+                                if (evaluar_decimal(tokenA)) {
+                                    contador_numeros_decimales++;
+                                } else if (evaluar_octal(tokenA)) {
+                                    contador_numeros_octales++;
+                                } else if (evaluar_hexadecimal(tokenA)) {
+                                    contador_numeros_hexadecimales++;
+                                }
+                                tokenA = strtok(NULL, "$");
+                                printf("*************************************\n");
+                                }
+                                printf("palabras DECIMALES: %d, OCTALES: %d, HEXADECIMALES: %d\n\n", contador_numeros_decimales, contador_numeros_octales, contador_numeros_hexadecimales);
+                                break;
                             }
                         }
                         break;
