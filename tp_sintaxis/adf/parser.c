@@ -2,14 +2,6 @@
 #include <stdbool.h>
 #include <ctype.h>
 
-// Enumeración para los estados del autómata
-typedef enum {
-    INICIAL,
-    ENTERO_DECIMAL,
-    ENTERO_OCTAL,
-    ENTERO_HEXADECIMAL,
-    ERROR
-} Estado;
 
 int evaluarExpresionRPN(const char *expresionRPN) {
     int stack[100]; // Pila para almacenar operandos
