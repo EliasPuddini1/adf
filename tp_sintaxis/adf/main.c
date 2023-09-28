@@ -15,9 +15,6 @@ int main()
     char stringA[LEN];
     char cadena_Archivo[40];
     char path[128];
-    int contador_numeros_decimales = 0;
-    int contador_numeros_octales = 0;
-    int contador_numeros_hexadecimales = 0;
     int opcion_Menu_Principal;
     int opcion_Menu_Secundario;
     int opcion_Menu_Parseado;
