@@ -75,26 +75,7 @@ int main()
                 {
                     while (fgets(cadena_Archivo, sizeof(cadena_Archivo), automata) != NULL)
                     {
-                        printf("La cadena es: %s\n", cadena_Archivo);
-                        char *tokenA = strtok(cadena_Archivo, "$");
-                        while (tokenA != NULL)
-                        {
-                            if (evaluar_decimal(tokenA))
-                            {
-                                contador_numeros_decimales++;
-                            }
-                            else if (evaluar_octal(tokenA))
-                            {
-                                contador_numeros_octales++;
-                            }
-                            else if (evaluar_hexadecimal(tokenA))
-                            {
-                                contador_numeros_hexadecimales++;
-                            }
-                            tokenA = strtok(NULL, "$");
-                            printf("*************************************\n");
-                        }
-                        printf("palabras DECIMALES: %d, OCTALES: %d, HEXADECIMALES: %d\n\n", contador_numeros_decimales, contador_numeros_octales, contador_numeros_hexadecimales);
+                        procesar_palabra(cadena_Archivo);
                         break;
                     }
                 }
