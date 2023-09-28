@@ -1,18 +1,26 @@
 #include <stdio.h>
 #include <ctype.h>
-/*void procesar_palabra(char *cadena){
+void procesar_palabra(char *cadena)
+{
+    printf("INGRESANDO A procesar_palabra");
+    int contador_numeros_decimales = 0;
+    int contador_numeros_octales = 0;
+    int contador_numeros_hexadecimales = 0;
+
     char * token = strtok(cadena, "$");
-     while( token != NULL )
-    { //evaluar_palabra (int respuesta)
-        if(evaluar_decimal(token))
+
+    while( token != NULL )
+    {
+        int resultado_evaluar_palabra = evaluar_palabra(token);
+        if(resultado_evaluar_palabra == 1)
         {
             contador_numeros_decimales++;
         }
-        else if(evaluar_octal(token))
+        else if(resultado_evaluar_palabra == 2)
         {
             contador_numeros_octales++;
         }
-        else if(evaluar_hexadecimal(token))
+        else if(resultado_evaluar_palabra == 3)
         {
             contador_numeros_hexadecimales++;
         }
@@ -21,25 +29,29 @@
 
         printf("*************************************\n");
     }
-    printf("palabras DECIMALES : %d , OCTALES: %d , HEXADECIMALES: %d", contador_numeros_decimales, contador_numeros_octales, contador_numeros_hexadecimales);
+    printf("palabras DECIMALES : %d , OCTALES: %d , HEXADECIMALES: %d\n", contador_numeros_decimales, contador_numeros_octales, contador_numeros_hexadecimales);
 }
 
 int evaluar_palabra(char *cadena)
-{   
-    //if (el primero == tiene + - )
-    //verifico decimal
-    //asigna 1
-    //ELSE (primero == 0 )
-    //asiga 2
-    //verifica alfabeto octal
-    //else (primeros 2 == 0x)
-    //verifica alfabeto hexa
-    //asigna 3 
+{
 
-   return 0; 
+    if (evaluar_decimal(cadena))
+    {
+        return 1;
+    }
+    if (evaluar_octal(cadena))
+    {
+        return 2;
+    }
+    if (evaluar_hexadecimal(cadena))
+    {
+        return 3;
+    }
+
+    return -1;
 }
 
-*/
+
 int evaluar_decimal(char *cadena)
 {
     int respuesta_verifica_alfabeto_decimal = verifica_alfabeto_decimal(cadena);
@@ -294,10 +306,10 @@ int es_palabra_hexadecimal(char *cadena)
 
     const int tt[4][24]=
     {
-        {INVALID_STATE,INVALID_STATE,1,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE},
-        {FINAL_STATE,FINAL_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE},
-        {INVALID_STATE,INVALID_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE},
-        {INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE},
+        {INVALID_STATE,INVALID_STATE,1,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE},
+        {FINAL_STATE,FINAL_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE},
+        {INVALID_STATE,INVALID_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE},
+        {INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE},
     };
 
     int estado = 0;

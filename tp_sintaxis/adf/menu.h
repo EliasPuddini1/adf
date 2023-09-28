@@ -5,9 +5,9 @@ void mostrarMenuPrincipal(int *opcion_Menu_Principal) {
         printf("2. Evaluar una cadena en los sistemas numericos Decimales, Octales y Hexadecimal\n");
         printf("3. Salir.\n\n\n");
         printf("Seleccione una opcion: ");
-        
+
         scanf("%d", opcion_Menu_Principal);
-        
+
         switch (*opcion_Menu_Principal) {
             case 1:
             case 2:
@@ -28,19 +28,19 @@ void mostrarMenuSecundario(int *opcion_Menu_Secundario) {
         printf("2. Ingresar por archivo.\n");
         printf("3. Volver al menu anterior.\n\n\n");
         printf("Seleccione una opcion: ");
-        
+
         scanf("%d", opcion_Menu_Secundario);
         //se maneja de igual forma que la pantalla principal
         switch (*opcion_Menu_Secundario) {
             case 1:
                 printf("\nUsted ingreso opcion 1.\n\n");
-                return; 
+                return;
             case 2:
                 printf("\nUsted ingreso opcion 2.\n\n");
-                return;  
+                return;
             case 3:
                 printf("\nVolviendo al menu anterior.\n\n");
-                return;  
+                return;
             default:
                 printf("\nOpcion invalida\n");
                 break;
@@ -54,22 +54,22 @@ void mostrarMenuSecundario(int *opcion_Menu_Secundario) {
         printf("2. Ver un ejemplo.\n");
         printf("3. Volver al menu anterior.\n\n\n");
         printf("Seleccione una opcion: ");
-        
+
         scanf("%d", opcion_Menu_Parseado);
         //se maneja de igual forma que la pantalla principal
         switch (*opcion_Menu_Parseado) {
             case 1:
                 printf("\nUsted ingreso opcion 1.\n\n");
-                return; 
+                return;
             case 2:
                 printf("\nUsted ingreso opcion 2.\n\n");
-                return;  
+                return;
             case 3:
                 printf("\nVolviendo al menu anterior.\n\n");
-                return;  
+                return;
             default:
                 printf("\nOpcion invalida\n");
                 break;
         }
     } while (*opcion_Menu_Parseado != 3);
-} 
+}
