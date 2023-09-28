@@ -47,3 +47,29 @@ void mostrarMenuSecundario(int *opcion_Menu_Secundario) {
         }
     } while (*opcion_Menu_Secundario != 3);
 }
+
+ void mostrarMenuParseado(int *opcion_Menu_Parseado){
+    do{
+        printf("1. Ingresar por consola.\n");
+        printf("2. Ver un ejemplo.\n");
+        printf("3. Volver al menu anterior.\n\n\n");
+        printf("Seleccione una opcion: ");
+        
+        scanf("%d", opcion_Menu_Parseado);
+        //se maneja de igual forma que la pantalla principal
+        switch (*opcion_Menu_Parseado) {
+            case 1:
+                printf("\nUsted ingreso opcion 1.\n\n");
+                return; 
+            case 2:
+                printf("\nUsted ingreso opcion 2.\n\n");
+                return;  
+            case 3:
+                printf("\nVolviendo al menu anterior.\n\n");
+                return;  
+            default:
+                printf("\nOpcion invalida\n");
+                break;
+        }
+    } while (*opcion_Menu_Parseado != 3);
+} 
