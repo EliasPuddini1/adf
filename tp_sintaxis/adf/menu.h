@@ -33,11 +33,8 @@ void mostrarMenuSecundario(int *opcion_Menu_Secundario) {
         //se maneja de igual forma que la pantalla principal
         switch (*opcion_Menu_Secundario) {
             case 1:
-                printf("\nUsted ingreso opcion 1.\n\n");
-                return;
             case 2:
-                printf("\nUsted ingreso opcion 2.\n\n");
-                return;
+                return;  
             case 3:
                 printf("\nVolviendo al menu anterior.\n\n");
                 return;
@@ -59,11 +56,8 @@ void mostrarMenuSecundario(int *opcion_Menu_Secundario) {
         //se maneja de igual forma que la pantalla principal
         switch (*opcion_Menu_Parseado) {
             case 1:
-                printf("\nUsted ingreso opcion 1.\n\n");
-                return;
             case 2:
-                printf("\nUsted ingreso opcion 2.\n\n");
-                return;
+                return;  
             case 3:
                 printf("\nVolviendo al menu anterior.\n\n");
                 return;
