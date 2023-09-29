@@ -121,3 +121,9 @@ int solve(Express *e) {
     }
     return (int)(pop(&(e->s)));
 }
+
+void generaParser(Express e, char string[LEN]){
+    initializeExpress(&e, string);
+    parse(&e);
+    printf("El resultado es: %d\n\n", solve(&e));
+}
