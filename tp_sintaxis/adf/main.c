@@ -3,13 +3,17 @@
 #include <string.h>
 #include <direct.h>
 #include <ctype.h>
-#include "string_utils.h"
-#include "evaluation_utils.h"
+//#include "string_utils.h"
+//#include "evaluation_utils.h"
 #include "menu.h"
-#include "parser.h"
+//#include "parser.h"
 
 int main()
 {
+
+mostrarMenu();
+    /*
+
     char cadena[100] = "-01230$-01231$1A$012347$0xFFFF";
     char string[LEN] = "2+3*4/3-2";
     char stringA[LEN];
@@ -64,7 +68,7 @@ int main()
                 break;
             case 2:
                 mostrarMenuSecundario(&opcion_Menu_Secundario);
-                
+
                 switch (opcion_Menu_Secundario) {
                     case 1:
                         printf("Recuerde que cada palabra debe finalizar con $");
@@ -95,4 +99,5 @@ int main()
     while (opcion_Menu_Principal != 3);
 
     return 0;
+    */
 }
