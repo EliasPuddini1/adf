@@ -1,18 +1,72 @@
-int evaluar_decimal(char *cadena)
+#include <stdio.h>
+#include <ctype.h>
+void procesar_palabra(char *cadena)
 {
-    int respuesta_verifica_alfabeto_decimal = verifica_alfabeto_decimal(cadena);
-    printf("verifica alfabeto decimal %s? %d\n",cadena,respuesta_verifica_alfabeto_decimal);
+    printf("INGRESANDO A procesar_palabra");
+    int contador_numeros_decimales = 0;
+    int contador_numeros_octales = 0;
+    int contador_numeros_hexadecimales = 0;
+
+    char * token = strtok(cadena, "$");
+
+    while( token != NULL )
+    {
+        int resultado_evaluar_palabra = evaluar_palabra(token);
+        if(resultado_evaluar_palabra == 1)
+        {
+            contador_numeros_decimales++;
+        }
+        else if(resultado_evaluar_palabra == 2)
+        {
+            contador_numeros_octales++;
+        }
+        else if(resultado_evaluar_palabra == 3)
+        {
+            contador_numeros_hexadecimales++;
+        }
+
+        token = strtok(NULL, "$");
+
+        printf("*************************************\n");
+    }
+    printf("palabras DECIMALES : %d , OCTALES: %d , HEXADECIMALES: %d\n", contador_numeros_decimales, contador_numeros_octales, contador_numeros_hexadecimales);
+}
+
+int evaluar_palabra(char *palabra)
+{
+
+    if (evaluar_decimal(palabra))
+    {
+        return 1;
+    }
+    if (evaluar_octal(palabra))
+    {
+        return 2;
+    }
+    if (evaluar_hexadecimal(palabra))
+    {
+        return 3;
+    }
+
+    return -1;
+}
+
+
+int evaluar_decimal(char *palabra)
+{
+    int respuesta_verifica_alfabeto_decimal = verifica_alfabeto_decimal(palabra);
+    printf("verifica alfabeto decimal %s? %d\n",palabra,respuesta_verifica_alfabeto_decimal);
     int respuesta_es_palabra_decimal = 0;
 
     if(respuesta_verifica_alfabeto_decimal==1)
     {
-        respuesta_es_palabra_decimal =es_palabra_decimal(cadena);
-        printf("es palabra decimal %s? %d\n",cadena,respuesta_es_palabra_decimal);
+        respuesta_es_palabra_decimal =es_palabra_decimal(palabra);
+        printf("es palabra decimal %s? %d\n",palabra,respuesta_es_palabra_decimal);
 
     }
     else
     {
-        printf("No se evalua la palabra %s porque no verifica alfabeto decimal\n", cadena);
+        printf("No se evalua la palabra %s porque no verifica alfabeto decimal\n", palabra);
     }
     return respuesta_es_palabra_decimal;
 }
@@ -32,7 +86,7 @@ int verifica_alfabeto_decimal(char *s)
     return 1;
 }
 
-int es_palabra_decimal(char *cadena)
+int es_palabra_decimal(char *palabra)
 {
     const int FINAL_STATE = 2;
     const int INVALID_STATE = 3;
@@ -40,19 +94,19 @@ int es_palabra_decimal(char *cadena)
 
     const int tt[4][11]=
     {
-        {INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,1,1},
-        {INVALID_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,INVALID_STATE,INVALID_STATE},
-        {FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,INVALID_STATE,INVALID_STATE},
-        {INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE}
+        {INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,1,1},
+        {INVALID_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,INVALID_STATE,INVALID_STATE},
+        {FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,INVALID_STATE,INVALID_STATE},
+        {INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE}
     };
 
     int estado = 0;
     int i=0;
-    int c= cadena[i];
+    int c= palabra[i];
     while(c!='\0')
     {
         estado=tt[estado][columna_decimal(c)];
-        c = cadena[++i];
+        c = palabra[++i];
     }
 
     if(estado == FINAL_STATE)
@@ -115,22 +169,22 @@ int columna_decimal(int c)
     }
 }
 /******************* OCTAL ************************/
-int evaluar_octal(char *cadena)
+int evaluar_octal(char *palabra)
 {
-    int respuesta_verifica_alfabeto_octal = verifica_alfabeto_octal(cadena);
-    printf("verifica alfabeto octal %s? %d\n",cadena,respuesta_verifica_alfabeto_octal);
+    int respuesta_verifica_alfabeto_octal = verifica_alfabeto_octal(palabra);
+    printf("verifica alfabeto octal %s? %d\n",palabra,respuesta_verifica_alfabeto_octal);
     int respuesta_es_palabra_octal= 0;
 
 
     if(respuesta_verifica_alfabeto_octal==1)
     {
-        respuesta_es_palabra_octal = es_palabra_octal(cadena);
-        printf("es palabra octal %s? %d\n",cadena,respuesta_es_palabra_octal);
+        respuesta_es_palabra_octal = es_palabra_octal(palabra);
+        printf("es palabra octal %s? %d\n",palabra,respuesta_es_palabra_octal);
 
     }
     else
     {
-        printf("No se evalua la palabra %s porque no verifica alfabeto octal\n", cadena);
+        printf("No se evalua la palabra %s porque no verifica alfabeto octal\n", palabra);
     }
     return respuesta_es_palabra_octal;
 }
@@ -150,7 +204,7 @@ int verifica_alfabeto_octal(char *s)
     return 1;
 }
 
-int es_palabra_octal(char *cadena)
+int es_palabra_octal(char *palabra)
 {
     const int FINAL_STATE = 1;
     const int INVALID_STATE = 2;
@@ -165,11 +219,11 @@ int es_palabra_octal(char *cadena)
 
     int estado = 0;
     int i=0;
-    int c= cadena[i];
+    int c= palabra[i];
     while(c!='\0')
     {
         estado=tt[estado][columna_octal(c)];
-        c = cadena[++i];
+        c = palabra[++i];
     }
 
     if(estado == FINAL_STATE)
@@ -211,21 +265,21 @@ int columna_octal(int c)
 }
 
 /******************* HEXADECIMAL ************************/
-int evaluar_hexadecimal(char *cadena)
+int evaluar_hexadecimal(char *palabra)
 {
-    int respuesta_verifica_alfabeto_hexadecimal = verifica_alfabeto_hexadecimal(cadena);
-    printf("verifica alfabeto hexadecimal %s? %d\n",cadena,respuesta_verifica_alfabeto_hexadecimal);
+    int respuesta_verifica_alfabeto_hexadecimal = verifica_alfabeto_hexadecimal(palabra);
+    printf("verifica alfabeto hexadecimal %s? %d\n",palabra,respuesta_verifica_alfabeto_hexadecimal);
     int respuesta_es_palabra_hexadecimal= 0;
 
     if(respuesta_verifica_alfabeto_hexadecimal==1)
     {
-        respuesta_es_palabra_hexadecimal = es_palabra_hexadecimal(cadena);
-        printf("es palabra hexadecimal %s? %d\n",cadena,respuesta_es_palabra_hexadecimal);
+        respuesta_es_palabra_hexadecimal = es_palabra_hexadecimal(palabra);
+        printf("es palabra hexadecimal %s? %d\n",palabra,respuesta_es_palabra_hexadecimal);
 
     }
     else
     {
-        printf("No se evalua la palabra %s porque no verifica alfabeto hexadecimal\n", cadena);
+        printf("No se evalua la palabra %s porque no verifica alfabeto hexadecimal\n", palabra);
     }
     return respuesta_es_palabra_hexadecimal;
 }
@@ -245,26 +299,26 @@ int verifica_alfabeto_hexadecimal(char *s)
     return 1;
 }
 
-int es_palabra_hexadecimal(char *cadena)
+int es_palabra_hexadecimal(char *palabra)
 {
     const int FINAL_STATE = 2;
     const int INVALID_STATE = 3;
 
     const int tt[4][24]=
     {
-        {INVALID_STATE,INVALID_STATE,1,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE},
-        {FINAL_STATE,FINAL_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE},
-        {INVALID_STATE,INVALID_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE},
-        {INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE},
+        {INVALID_STATE,INVALID_STATE,1,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE},
+        {FINAL_STATE,FINAL_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE},
+        {INVALID_STATE,INVALID_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE,FINAL_STATE},
+        {INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE,INVALID_STATE},
     };
 
     int estado = 0;
     int i=0;
-    int c= cadena[i];
+    int c= palabra[i];
     while(c!='\0')
     {
         estado=tt[estado][columna_hexadecimal(c)];
-        c = cadena[++i];
+        c = palabra[++i];
     }
 
     if(estado == FINAL_STATE)
