@@ -1,4 +1,4 @@
-/*
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -128,4 +128,4 @@ void generaParser(Express e, char string[LEN]){
     parse(&e);
     printf("El resultado es: %d\n\n", solve(&e));
 }
-*/
+
