@@ -11,7 +11,7 @@
 int main()
 {
 
-mostrarMenu();
+//mostrarMenu();
     /*
 
     char cadena[100] = "-01230$-01231$1A$012347$0xFFFF";

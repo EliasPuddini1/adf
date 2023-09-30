@@ -7,7 +7,7 @@
 1695012251 e:\users\documents\tp_sintaxis\adf\string_utils.h
 	<stdlib.h>
 
-1695961014 source:e:\users\documents\ssl adf\adf\tp_sintaxis\adf\main.c
+1696079190 source:e:\users\documents\ssl adf\adf\tp_sintaxis\adf\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -21,10 +21,8 @@
 	<stdio.h>
 	<ctype.h>
 
-1695960994 e:\users\documents\ssl adf\adf\tp_sintaxis\adf\menu.h
+1695961206 e:\users\documents\ssl adf\adf\tp_sintaxis\adf\menu.h
 	<stdio.h>
-	"evaluation_utils.h"
-	"parser.h"
 
 1695960757 e:\users\documents\ssl adf\adf\tp_sintaxis\adf\parser.h
 	<stdio.h>
