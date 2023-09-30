@@ -4,10 +4,74 @@
 #include <stdlib.h>
 #include <string.h>
 
-int evaluarExpresionRPN(const char *expresionRPN) {
-    int stack[100]; // Pila para almacenar operandos
-    int top = -1;   // Índice del elemento superior de la pila
+// Estructura para la pila de operandos
+typedef struct {
+    int *items;
+    int top;
+    int size;
+} OperandStack;
 
+// Estructura para la pila de operadores
+typedef struct {
+    char *items;
+    int top;
+    int size;
+} OperatorStack;
+
+// Funciones para la pila de operandos
+OperandStack *createOperandStack(int size) {
+    OperandStack *stack = (OperandStack *)malloc(sizeof(OperandStack));
+    stack->items = (int *)malloc(sizeof(int) * size);
+    stack->top = -1;
+    stack->size = size;
+    return stack;
+}
+
+void pushOperand(OperandStack *stack, int value) {
+    if (stack->top < stack->size - 1) {
+        stack->items[++stack->top] = value;
+    } else {
+        // Manejar error de desbordamiento de la pila (puedes implementar manejo de errores adecuado)
+    }
+}
+
+int popOperand(OperandStack *stack) {
+    if (stack->top >= 0) {
+        return stack->items[stack->top--];
+    } else {
+        // Manejar error de desbordamiento de la pila (puedes implementar manejo de errores adecuado)
+        return 0; // Valor predeterminado en caso de error
+    }
+}
+
+// Funciones para la pila de operadores
+OperatorStack *createOperatorStack(int size) {
+    OperatorStack *stack = (OperatorStack *)malloc(sizeof(OperatorStack));
+    stack->items = (char *)malloc(sizeof(char) * size);
+    stack->top = -1;
+    stack->size = size;
+    return stack;
+}
+
+void pushOperator(OperatorStack *stack, char value) {
+    if (stack->top < stack->size - 1) {
+        stack->items[++stack->top] = value;
+    } else {
+        // Manejar error de desbordamiento de la pila (puedes implementar manejo de errores adecuado)
+    }
+}
+
+char popOperator(OperatorStack *stack) {
+    if (stack->top >= 0) {
+        return stack->items[stack->top--];
+    } else {
+        // Manejar error de desbordamiento de la pila (puedes implementar manejo de errores adecuado)
+        return '\0'; // Valor predeterminado en caso de error
+    }
+}
+
+int evaluarExpresionRPN(const char *expresionRPN) {
+    OperandStack *stack = createOperandStack(100);
 
     for (int i = 0; expresionRPN[i] != '\0'; i++) {
         char caracter = expresionRPN[i];
@@ -15,29 +79,29 @@ int evaluarExpresionRPN(const char *expresionRPN) {
         if (isdigit(caracter) || (caracter == '-' && isdigit(expresionRPN[i + 1]))) {
             // Leer un número
             int numero = strtol(&expresionRPN[i], NULL, 10);
-            stack[++top] = numero;
+            pushOperand(stack, numero);
             // Mover el índice 'i' al final del número
             while (isdigit(expresionRPN[i]) || expresionRPN[i] == '-') {
                 i++;
             }
             i--;
         } else if (caracter == '+') {
-            int operand2 = stack[top--];
-            int operand1 = stack[top--];
-            stack[++top] = operand1 + operand2;
+            int operand2 = popOperand(stack);
+            int operand1 = popOperand(stack);
+            pushOperand(stack, operand1 + operand2);
         } else if (caracter == '-') {
-            int operand2 = stack[top--];
-            int operand1 = stack[top--];
-            stack[++top] = operand1 - operand2;
+            int operand2 = popOperand(stack);
+            int operand1 = popOperand(stack);
+            pushOperand(stack, operand1 - operand2);
         } else if (caracter == '*') {
-            int operand2 = stack[top--];
-            int operand1 = stack[top--];
-            stack[++top] = operand1 * operand2;
+            int operand2 = popOperand(stack);
+            int operand1 = popOperand(stack);
+            pushOperand(stack, operand1 * operand2);
         } else if (caracter == '/') {
-            int operand2 = stack[top--];
-            int operand1 = stack[top--];
+            int operand2 = popOperand(stack);
+            int operand1 = popOperand(stack);
             if (operand2 != 0) {
-                stack[++top] = operand1 / operand2;
+                pushOperand(stack, operand1 / operand2);
             } else {
                 printf("Error: División por cero.\n");
                 exit(1);
@@ -45,7 +109,13 @@ int evaluarExpresionRPN(const char *expresionRPN) {
         }
     }
 
-    return stack[top];
+    int resultado = popOperand(stack);
+
+    // Liberar la memoria de la pila de operandos
+    free(stack->items);
+    free(stack);
+
+    return resultado;
 }
 
 // Función para determinar la prioridad de los operadores
