@@ -1,12 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <direct.h>
-#include <ctype.h>
-//#include "string_utils.h"
-//#include "evaluation_utils.h"
 #include "menu.h"
-//#include "parser.h"
 
 int main()
 {

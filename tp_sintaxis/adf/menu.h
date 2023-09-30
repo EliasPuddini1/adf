@@ -4,34 +4,40 @@
 #include "evaluation_utils.h"
 #include "parser.h"
 
-
-void mostrarMenuParseado(void);
-void mostrarMenuSecundario(void);
-
 char cadenaPrueba[100] = "-01230$-01231$1A$012347$0xFFFF";
 char operation_string[40] = "2+3*4/3-2";
 char stringA[40];
-void mostrarMenu()
+void mostrar_menu()
 {
-    int opcion_Menu_Principal;
+    int opcion_menu;
     do
     {
-        printf("1. Parsear operaciones matematicas.\n");
-        printf("2. Evaluar una cadena en los sistemas numericos Decimales, Octales y Hexadecimal\n");
-        printf("3. Salir.\n\n\n");
+        printf("1. Parsear operaciones matematicas desde archivo.\n");
+        printf("2. Parsear operaciones matematicas desde consola.\n");
+
+        printf("3. Evaluar una cadena en los sistemas numericos Decimales, Octales y Hexadecimal desde archivo\n");
+        printf("4. Evaluar una cadena en los sistemas numericos Decimales, Octales y Hexadecimal desde consola\n");
+
+        printf("5. Salir.\n\n\n");
         printf("Seleccione una opcion: ");
 
-        scanf("%d", &opcion_Menu_Principal);
+        scanf("%d", &opcion_menu);
 
-        switch (opcion_Menu_Principal)
+        switch (opcion_menu)
         {
         case 1:
-            mostrarMenuParseado();
+            //mostrarMenuParseado();
             break;
         case 2:
-            mostrarMenuSecundario();
+            //mostrarMenuSecundario();
             break;
         case 3:
+           // printf("Saliendo del programa.\n");
+            break;
+        case 4:
+           // printf("Saliendo del programa.\n");
+            break;
+        case 5:
             printf("Saliendo del programa.\n");
             break;
         default:
@@ -39,74 +45,12 @@ void mostrarMenu()
             break;
         }
     }
-    while (opcion_Menu_Principal != 3);
+    while (opcion_menu != 5);
 }
 
-void mostrar_meenu_automata()
-{
-    int opcion_Menu_Secundario;
-    char* cadena;
-    do
-    {
-        printf("1. Ingresar por consola.\n");
-        printf("2. Ingresar por archivo.\n");
-        printf("3. Volver al menu anterior.\n\n\n");
-        printf("Seleccione una opcion: ");
 
-        scanf("%d", &opcion_Menu_Secundario);
-        //se maneja de igual forma que la pantalla principal
-        switch (opcion_Menu_Secundario)
-        {
-        case 1:
-            cadena = obtenerDatosConsola();
-            procesar_palabra(cadena);
-            break;
-        case 2:
-            obtenerDatosArchivo();
-            procesar_palabra(cadena);
-            break;
-        case 3:
-            break;
-        default:
-            printf("\nOpcion invalida\n");
-            break;
-        }
-    }
-    while (opcion_Menu_Secundario != 3);
 
-}
 
-void mostrar_meenu_parser()
-{
-    int opcion_menu_parseado;
-    do
-    {
-        printf("1. Ingresar por consola.\n");
-        printf("2. Ver un ejemplo.\n");
-        printf("3. Volver al menu anterior.\n\n\n");
-        printf("Seleccione una opcion: ");
-
-        scanf("%d", &opcion_menu_parseado);
-
-        switch (opcion_menu_parseado)
-        {
-        case 1:
-
-            break;
-        case 2:
-            printf("Operacion de Ejemplo: %s\n",operation_string);
-
-            break;
-        case 3:
-            printf("\nVolviendo al menu anterior.\n\n");
-            return;
-        default:
-            printf("\nOpcion invalida\n");
-            break;
-        }
-    }
-    while (opcion_menu_parseado != 3);
-}
 
 char obtenerDatosArchivo()
 {
